@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>高校英単語トレーナー(大学入試)</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--tx:#1f2430;--sub:#6b7280;--ac:#2f6fed;--ok:#16a34a;--ng:#dc2626;--bd:#e3e6ee;--star:#f59e0b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1c212b;--tx:#eef1f6;--sub:#9aa3b2;--bd:#2c3340}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1c212b;--tx:#eef1f6;--sub:#9aa3b2;--bd:#2c3340}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;line-height:1.5}
+main{max-width:560px;margin:0 auto;padding:16px 16px 90px}
+h1{font-size:1.2rem;margin:4px 0 14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;margin-bottom:12px}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:12px;padding:13px 18px;font-weight:700;width:100%}
+.btn.sub{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+.btn:disabled{opacity:.4}
+.pool{display:flex;gap:8px;margin-bottom:14px}
+.pool button{flex:1;border:2px solid var(--bd);background:var(--card);border-radius:12px;padding:10px 4px;font-size:.85rem}
+.pool button.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 12%,var(--card))}
+.pool b{display:block;font-size:1.2rem}
+.word{font-size:2.2rem;font-weight:800;text-align:center;margin:10px 0 4px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--sub);font-size:.9rem}
+.ch{display:block;width:100%;text-align:left;border:2px solid var(--bd);background:var(--card);border-radius:12px;padding:13px 14px;margin-top:8px;font-size:1.02rem}
+.ch.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--card))}
+.ch.ng{border-color:var(--ng);background:color-mix(in srgb,var(--ng) 15%,var(--card))}
+.mark{font-size:4rem;text-align:center;font-weight:800;height:74px;line-height:74px}
+.mark.ok{color:var(--ok)}.mark.ng{color:var(--ng)}
+.star{background:none;border:0;font-size:1.5rem;color:var(--bd);padding:2px 6px}
+.star.on{color:var(--star)}
+.spk{background:none;border:1px solid var(--bd);border-radius:20px;padding:4px 12px;font-size:.9rem}
+.row{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.row:last-child{border:0}.row .e{font-weight:700;min-width:110px}.row .j{flex:1;color:var(--sub);font-size:.92rem}
+input[type=search]{width:100%;padding:11px 14px;border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);font:inherit;margin-bottom:10px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;background:none;border:0;padding:12px 0;color:var(--sub);font-size:.85rem}
+nav button.on{color:var(--ac);font-weight:700}
+.big{font-size:2.6rem;font-weight:800;text-align:center}
+.muted{color:var(--sub);font-size:.88rem}
+.bar{height:6px;background:var(--bd);border-radius:3px;margin:8px 0 14px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.mx{display:grid;grid-template-columns:auto repeat(3,1fr);gap:6px;margin-bottom:14px;align-items:center;font-size:.8rem}.mx .h{color:var(--sub);text-align:center}.mx button{border:2px solid var(--bd);background:var(--card);border-radius:10px;padding:8px 2px;font-size:.78rem}.mx button.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 12%,var(--card))}.mx b{display:block;font-size:1.05rem}</style></head>
+<body><main id="app"></main>
+<nav id="nav"></nav>
+<script>
+const RAW=`
+#1
+abandon,見捨てる
+absorb,吸収する
+accurate,正確な
+adapt,適応する
+adequate,十分な
+adjust,調整する
+admit,認める
+adopt,採用する
+advance,進歩する
+aim,狙う
+alter,変える
+alternative,代わりの
+analysis,分析
+apparent,明白な
+appreciate,感謝する
+appropriate,適切な
+approve,承認する
+aspect,側面
+assume,仮定する
+attach,取り付ける
+attempt,試みる
+attract,引きつける
+available,利用できる
+basic,基本的な
+behavior,行動
+capable,能力がある
+category,種類
+claim,主張する
+clue,手がかり
+combine,結合する
+comment,意見
+compete,競争する
+complex,複雑な
+concept,概念
+conclude,結論づける
+conduct,行う
+confirm,確認する
+consist,成り立つ
+constant,一定の
+contrast,対照
+declare,宣言する
+define,定義する
+demand,要求
+deny,否定する
+digital,デジタルの
+distinguish,区別する
+distribute,分配する
+doubt,疑い
+duty,義務
+emerge,現れる
+emphasize,強調する
+enable,可能にする
+estimate,見積もる
+evaluate,評価する
+exceed,超える
+expand,拡大する
+expose,さらす
+extend,広げる
+factor,要因
+gain,得る
+generate,生み出す
+genuine,本物の
+glance,ちらっと見る
+hence,それゆえ
+identity,同一性
+imply,ほのめかす
+indicate,示す
+initial,最初の
+interpret,解釈する
+invest,投資する
+label,ラベル
+lack,欠如
+launch,開始する
+legal,法律の
+mere,単なる
+mild,穏やかな
+mission,使命
+overall,全体の
+pace,歩調
+participant,参加者
+passion,情熱
+plenty,たくさん
+portion,部分
+potential,潜在的な
+predict,予測する
+presence,存在
+primary,主要な
+profit,利益
+range,範囲
+reflect,反映する
+reject,拒否する
+rely,頼る
+reserve,予約する
+resident,住民
+restore,回復する
+route,道筋
+seek,探し求める
+severe,厳しい
+shift,移る
+stable,安定した
+submit,提出する
+sum,合計
+summarize,要約する
+supply,供給
+theory,理論
+trend,傾向
+unique,唯一の
+version,版
+vary,異なる
+apply for,〜に申し込む
+bring up,育てる
+carry out,実行する
+come across,偶然出会う
+come up with,思いつく
+deal with,扱う
+figure out,理解する
+hand in,提出する
+make sense,意味をなす
+point out,指摘する
+put off,延期する
+run out of,〜を使い果たす
+set up,設立する
+show up,現れる
+turn out,〜と判明する
+as for,〜に関しては
+be likely to,〜しそうだ
+be used to,〜に慣れている
+academic,学問の
+accomplish,成し遂げる
+accuse,非難する
+achieve,達成する
+acknowledge,認める
+affect,影響する
+afford,余裕がある
+agency,機関
+agriculture,農業
+ancestor,祖先
+anxiety,不安
+arise,生じる
+artificial,人工の
+atmosphere,雰囲気
+attitude,態度
+automatic,自動の
+avoid,避ける
+awareness,認識
+barely,かろうじて
+benefit,利益
+border,国境
+brief,短い
+broadcast,放送する
+budget,予算
+capacity,収容力
+cautious,用心深い
+challenge,挑戦
+chance,可能性
+charity,慈善
+clarify,明確にする
+classic,古典の
+climate,気候
+commerce,商業
+complain,不平を言う
+complicated,複雑な
+concern,心配
+condition,状態
+confident,自信のある
+conflict,対立
+conscious,意識して
+consent,同意
+contain,含む
+context,文脈
+contribute,貢献する
+convenient,便利な
+cooperate,協力する
+crisis,危機
+critic,批評家
+damage,損害
+debate,討論
+decade,10年
+decrease,減少する
+defeat,打ち負かす
+delay,遅らせる
+delicate,繊細な
+democracy,民主主義
+despite,〜にもかかわらず
+detail,詳細
+devote,捧げる
+disaster,災害
+discipline,規律
+disease,病気
+display,展示する
+distance,距離
+distant,遠い
+domestic,国内の
+edit,編集する
+effective,効果的な
+efficient,効率的な
+element,要素
+emotion,感情
+emphasis,強調
+encounter,遭遇する
+endure,耐える
+enormous,莫大な
+entire,全体の
+environment,環境
+equip,備える
+essential,不可欠な
+ethical,倫理的な
+evident,明白な
+evolve,進化する
+exchange,交換する
+exhibit,展示する
+expense,費用
+export,輸出する
+facility,施設
+failure,失敗
+fairly,かなり
+faith,信頼
+fatal,致命的な
+feature,特徴
+fee,料金
+fiction,小説
+flexible,柔軟な
+fluent,流暢な
+forbid,禁じる
+former,前の
+fortune,運
+frequent,頻繁な
+furthermore,さらに
+gender,性別
+generous,気前のよい
+globe,地球
+grasp,つかむ
+gratitude,感謝
+guarantee,保証する
+guidance,指導
+habitat,生息地
+handle,扱う
+harm,害
+hardly,ほとんど〜ない
+hazard,危険
+heritage,遺産
+honor,名誉
+humble,謙虚な
+illusion,錯覚
+immigrant,移民
+incident,出来事
+income,収入
+indeed,実際に
+individual,個人
+industrial,産業の
+infant,幼児
+influence,影響
+ingredient,材料
+injure,傷つける
+instance,例
+intellectual,知的な
+intend,意図する
+interfere,妨げる
+interval,間隔
+invisible,見えない
+journal,雑誌
+judge,判断する
+justify,正当化する
+keen,熱心な
+kingdom,王国
+landscape,風景
+lecture,講義
+liberal,自由主義の
+liquid,液体
+literally,文字通り
+literary,文学の
+location,場所
+logic,論理
+manufacture,製造する
+marine,海の
+mass,大量
+meanwhile,その間
+mechanical,機械の
+medical,医学の
+merchant,商人
+merely,単に
+migrate,移住する
+minimum,最小限
+minister,大臣
+minor,小さい
+moral,道徳的な
+motive,動機
+nation,国家
+neighborhood,近所
+nerve,神経
+novel,小説
+numerous,多数の
+occupy,占める
+official,公式の
+operate,操作する
+opponent,対戦相手
+ordinary,普通の
+organ,臓器
+output,生産高
+owe,借りがある
+permanent,永久の
+persuade,説得する
+pioneer,開拓者
+plot,筋
+pollute,汚染する
+precise,正確な
+pride,誇り
+prime,主要な
+principle,原理
+proceed,進む
+prompt,迅速な
+pronounce,発音する
+proof,証拠
+proper,適切な
+prove,証明する
+publish,出版する
+punish,罰する
+quote,引用する
+break down,故障する
+break out,勃発する
+call on,訪ねる
+carry on,続ける
+check in,チェックインする
+check out,チェックアウトする
+cut down on,減らす
+depend on,〜次第だ
+fill in,記入する
+get along,うまくやる
+go through,経験する
+hold on,待つ
+keep in mind,心に留める
+look out,気をつける
+pass away,亡くなる
+pay attention to,〜に注意を払う
+run into,偶然会う
+see off,見送る
+take place,行われる
+take up,始める
+throw away,捨てる
+try on,試着する
+work out,解決する
+abroad,海外へ
+absence,欠席
+absolute,絶対的な
+abundant,豊富な
+accessible,利用しやすい
+acid,酸
+admire,称賛する
+advertise,宣伝する
+aid,援助
+alert,油断のない
+alike,似ている
+alongside,〜と並んで
+amount,量
+amuse,楽しませる
+ancient,古代の
+annual,毎年の
+apology,謝罪
+appetite,食欲
+applicant,応募者
+appoint,任命する
+architecture,建築
+argue,議論する
+arrest,逮捕する
+arrival,到着
+ashamed,恥じて
+assist,助ける
+associate,関連づける
+assure,保証する
+athlete,運動選手
+attend,出席する
+attractive,魅力的な
+average,平均
+await,待つ
+baggage,荷物
+ban,禁止
+bare,むき出しの
+barrier,障壁
+betray,裏切る
+bill,請求書
+blame,責める
+blank,空白の
+blend,混ぜる
+blind,盲目の
+bloom,咲く
+boast,自慢する
+bond,絆
+bother,悩ます
+bury,埋める
+calculate,計算する
+campus,構内
+carbon,炭素
+cast,投げる
+cattle,牛
+ceremony,儀式
+chart,図表
+chase,追う
+cheat,だます
+chief,主な
+citizen,市民
+classify,分類する
+coast,海岸
+code,規則
+combat,戦闘
+comfort,快適さ
+command,命令する
+compare,比較する
+compliment,賛辞
+component,構成要素
+concentrate,集中する
+concrete,具体的な
+confess,告白する
+conquer,征服する
+conscience,良心
+considerate,思いやりのある
+constitution,憲法
+consumer,消費者
+continent,大陸
+contract,契約
+convention,慣習
+convey,伝える
+corporate,企業の
+cost,費用
+council,評議会
+courage,勇気
+court,法廷
+crack,ひび
+craft,工芸
+crash,衝突する
+creature,生き物
+crew,乗組員
+criminal,犯罪者
+crop,作物
+crush,押しつぶす
+cure,治す
+curtain,カーテン
+dairy,乳製品の
+dare,あえて〜する
+deadline,締め切り
+deal,取引
+debt,借金
+deceive,だます
+dedicate,捧げる
+defect,欠陥
+defend,守る
+delight,喜び
+deposit,預金
+depth,深さ
+descend,降りる
+desire,願望
+desperate,絶望的な
+destiny,運命
+dialect,方言
+diet,食事
+dignity,尊厳
+dim,薄暗い
+direct,直接の
+director,監督
+disappoint,失望させる
+discard,捨てる
+dismiss,解雇する
+district,地区
+divorce,離婚
+dose,服用量
+downtown,中心街
+draft,下書き
+drain,排水する
+drift,漂う
+drought,干ばつ
+dynamic,活発な
+see to it that,必ず〜するようにする
+get rid of,〜を取り除く
+be eager to,〜したがる
+be willing to,進んで〜する
+be bound to,必ず〜する
+be about to,まさに〜しようとする
+as long as,〜する限り
+no longer,もはや〜ない
+not only A but also B,AだけでなくBも
+advise,忠告する
+amaze,驚嘆させる
+announce,発表する
+apologize,謝罪する
+arrange,手配する
+behave,振る舞う
+belong,属する
+bear,耐える
+burst,破裂する
+capture,捕らえる
+cherish,大切にする
+communicate,伝達する
+compose,作曲する
+consider,考慮する
+create,創造する
+deserve,値する
+destroy,破壊する
+develop,発達させる
+discuss,議論する
+dislike,嫌う
+donate,寄付する
+drown,溺れる
+employ,雇う
+encourage,励ます
+escape,逃げる
+examine,調べる
+except,〜を除いて
+expect,予期する
+explain,説明する
+explore,探検する
+express,表現する
+fasten,留める
+fetch,取ってくる
+fit,合う
+forgive,許す
+frighten,怖がらせる
+gather,集める
+greet,挨拶する
+hang,掛ける
+hire,雇う
+ignore,無視する
+imagine,想像する
+improve,改善する
+include,含む
+increase,増加する
+inform,知らせる
+invent,発明する
+invite,招待する
+involve,巻き込む
+lay,横たえる
+manage,管理する
+marry,結婚する
+mean,意味する
+measure,測る
+mislead,誤解させる
+notice,気づく
+observe,観察する
+offer,申し出る
+order,命令する
+own,所有する
+pause,休止する
+perform,演じる
+permit,許可する
+prefer,好む
+prepare,準備する
+present,提示する
+prevent,防ぐ
+produce,生産する
+promote,促進する
+protect,守る
+provide,提供する
+realize,気づく
+receive,受け取る
+recognize,認識する
+recommend,勧める
+reduce,減らす
+refer,言及する
+refuse,断る
+regret,後悔する
+relate,関連づける
+remain,とどまる
+remind,思い出させる
+remove,取り除く
+repair,修理する
+replace,取り替える
+represent,表す
+request,要請する
+require,必要とする
+rescue,救助する
+resemble,似ている
+respond,応答する
+retire,退職する
+reveal,明らかにする
+reward,報いる
+satisfy,満足させる
+scatter,まき散らす
+seem,思われる
+select,選ぶ
+separate,分ける
+settle,定住する
+shelter,避難所
+shrink,縮む
+signal,合図する
+solve,解決する
+sort,分類する
+spoil,台無しにする
+stare,じっと見る
+steal,盗む
+strengthen,強化する
+stretch,伸ばす
+struggle,奮闘する
+suggest,提案する
+suit,似合う
+surround,取り囲む
+suspect,疑う
+swallow,飲み込む
+tear,引き裂く
+tie,結ぶ
+translate,翻訳する
+tremble,震える
+vanish,消える
+wander,さまよう
+weigh,重さを量る
+wipe,ふく
+worship,崇拝する
+apart,離れて
+besides,そのうえ
+ahead,前方に
+anyway,とにかく
+elsewhere,他の所で
+nowadays,近ごろ
+somewhat,いくらか
+thereby,それによって
+throughout,〜の間じゅう
+toward,〜の方へ
+underneath,〜の下に
+upward,上へ
+whatever,何でも
+whichever,どちらでも
+whoever,誰でも
+#2
+accompany,同行する
+acquire,獲得する
+aggressive,攻撃的な
+anticipate,予想する
+assess,評価する
+authority,権威
+bias,偏見
+boost,押し上げる
+cease,やめる
+circumstance,状況
+collapse,崩壊する
+commit,犯す
+compensate,補う
+comprehensive,包括的な
+conceal,隠す
+consequence,結果
+considerable,かなりの
+consume,消費する
+contemporary,現代の
+controversy,論争
+convince,納得させる
+crucial,極めて重要な
+currency,通貨
+decline,衰える
+derive,由来する
+detect,見つける
+dilemma,板挟み
+discriminate,差別する
+dispute,論争
+dominate,支配する
+dramatic,劇的な
+enhance,高める
+ethnic,民族の
+exploit,利用する
+fundamental,基本的な
+govern,統治する
+guilty,有罪の
+hypothesis,仮説
+implement,実行する
+impose,課す
+inevitable,避けられない
+infer,推測する
+inherit,受け継ぐ
+insight,洞察
+inspire,奮い立たせる
+intense,激しい
+isolate,孤立させる
+loyal,忠実な
+massive,大規模な
+mutual,相互の
+neglect,怠る
+neutral,中立の
+notion,概念
+objective,客観的な
+obstacle,障害
+ongoing,進行中の
+outline,概要
+overlook,見落とす
+parallel,平行の
+perceive,知覚する
+phenomenon,現象
+philosophy,哲学
+prejudice,偏見
+preserve,保存する
+privilege,特権
+prohibit,禁止する
+prospect,見込み
+pursue,追求する
+radical,急進的な
+rational,理性的な
+reform,改革
+regard,みなす
+relevant,関連のある
+reluctant,気が進まない
+reputation,評判
+resolve,解決する
+restrict,制限する
+retain,保持する
+reverse,逆の
+rigid,堅い
+scarce,乏しい
+scope,範囲
+sector,部門
+secure,安全な
+sensible,分別のある
+sequence,連続
+sincere,誠実な
+stimulate,刺激する
+substance,物質
+substitute,代わり
+superior,優れた
+sustain,持続させる
+tension,緊張
+thorough,徹底的な
+transform,変形させる
+transfer,移す
+ultimate,究極の
+undergo,経験する
+undertake,引き受ける
+universal,普遍的な
+urge,促す
+utilize,利用する
+vague,あいまいな
+virtual,仮想の
+vivid,鮮明な
+vulnerable,傷つきやすい
+widespread,広範囲の
+yield,産出する
+account for,〜を説明する
+be aware of,〜に気づいている
+be based on,〜に基づく
+be capable of,〜できる
+be responsible for,〜に責任がある
+be supposed to,〜することになっている
+call for,〜を要求する
+catch up with,〜に追いつく
+cope with,対処する
+end up,結局〜になる
+get over,〜を乗り越える
+in charge of,〜を担当して
+in terms of,〜の点で
+keep up with,〜に遅れずについていく
+look into,調べる
+look up to,尊敬する
+make use of,利用する
+put up with,我慢する
+result in,〜という結果になる
+take advantage of,〜を利用する
+take over,引き継ぐ
+abnormal,異常な
+abuse,乱用
+accustomed,慣れた
+adolescent,青年期の
+adverse,不利な
+advocate,主張する
+alleviate,和らげる
+ally,同盟国
+ample,十分な
+anonymous,匿名の
+apparatus,装置
+appeal,訴える
+assemble,集める
+assert,主張する
+assign,割り当てる
+attribute,〜のせいにする
+authentic,本物の
+bargain,取引
+beneficial,有益な
+bold,大胆な
+breed,繁殖させる
+brutal,残忍な
+burden,重荷
+candidate,候補者
+cargo,貨物
+casual,くだけた
+catastrophe,大惨事
+chronic,慢性の
+circulate,循環する
+cite,引用する
+civil,市民の
+clarity,明快さ
+cluster,集団
+coincide,同時に起こる
+colleague,同僚
+commodity,商品
+compile,編集する
+complement,補完する
+compound,化合物
+comprehend,理解する
+compulsory,義務的な
+conform,従う
+confront,立ち向かう
+consecutive,連続した
+constitute,構成する
+constrain,制約する
+consult,相談する
+contend,主張する
+contempt,軽蔑
+correlate,相関する
+crude,粗雑な
+cultivate,耕す
+cumulative,累積的な
+curb,抑制する
+cynical,皮肉な
+deficit,赤字
+deliberate,意図的な
+denote,示す
+deprive,奪う
+designate,指定する
+deviate,逸脱する
+devise,考案する
+dimension,次元
+disclose,暴露する
+discourage,落胆させる
+disrupt,混乱させる
+dissolve,溶ける
+diverse,多様な
+doctrine,教義
+dwell,住む
+ecology,生態学
+elicit,引き出す
+embrace,受け入れる
+eminent,著名な
+endorse,支持する
+enforce,実施する
+enrich,豊かにする
+enroll,登録する
+ensure,確実にする
+entitle,権利を与える
+entity,実体
+erode,浸食する
+essence,本質
+exert,及ぼす
+exhaust,疲れ果てさせる
+expire,期限が切れる
+extinct,絶滅した
+fabricate,でっち上げる
+facilitate,促進する
+faculty,能力・学部
+flaw,欠陥
+fluctuate,変動する
+forecast,予報
+foster,育てる
+fragile,壊れやすい
+fragment,断片
+framework,枠組み
+frontier,国境
+gloomy,陰気な
+grant,与える
+gravity,重力
+grief,深い悲しみ
+hinder,妨げる
+humanity,人間性
+hygiene,衛生
+ideology,イデオロギー
+immense,巨大な
+impair,損なう
+incentive,動機
+incorporate,組み込む
+indifferent,無関心な
+induce,誘発する
+inflict,与える
+inhabit,住む
+innocent,無実の
+inquiry,調査
+insist,主張する
+instinct,本能
+integrity,誠実さ
+interact,相互作用する
+interrupt,さえぎる
+intervene,介入する
+intimate,親密な
+invalid,無効な
+irony,皮肉
+be reluctant to,〜したがらない
+by no means,決して〜ない
+for the sake of,〜のために
+in accordance with,〜に従って
+in spite of,〜にもかかわらず
+in the absence of,〜がない場合
+on the verge of,〜の寸前で
+rule out,除外する
+stand for,表す
+take for granted,当然と思う
+make a difference,違いを生む
+earnest,真剣な
+edible,食べられる
+elegant,優雅な
+elementary,初歩の
+elevate,上げる
+emission,排出
+empire,帝国
+enclose,囲む
+energetic,精力的な
+engage,従事させる
+enthusiasm,熱意
+envy,うらやむ
+epidemic,流行病
+equality,平等
+equivalent,同等の
+era,時代
+eternal,永遠の
+evacuate,避難する
+excess,過剰
+execute,実行する
+exotic,異国風の
+extract,抽出する
+fade,薄れる
+fare,運賃
+fate,運命
+favorable,好意的な
+fierce,激しい
+fiscal,財政の
+flee,逃げる
+fond,好きで
+formula,公式
+fossil,化石
+fraction,断片
+fraud,詐欺
+fulfill,果たす
+gaze,見つめる
+genetic,遺伝の
+geography,地理
+glorious,輝かしい
+gorgeous,豪華な
+grace,優雅さ
+greed,貪欲
+grocery,食料品
+halt,止める
+harbor,港
+harsh,厳しい
+heir,相続人
+hollow,空洞の
+horizon,地平線
+hostile,敵意のある
+illiterate,読み書きできない
+imitate,まねる
+immediate,即座の
+immortal,不死の
+impact,影響
+implicit,暗黙の
+impulse,衝動
+inferior,劣った
+inflation,インフレ
+inhibit,抑制する
+inject,注射する
+insert,挿入する
+inspect,検査する
+install,設置する
+insult,侮辱する
+insurance,保険
+interior,内部の
+invade,侵略する
+jury,陪審
+lawsuit,訴訟
+league,連盟
+leak,漏れる
+legacy,遺産
+liable,責任がある
+liberate,解放する
+literacy,読み書き能力
+loan,貸付
+magnify,拡大する
+maintenance,維持
+mammal,哺乳類
+mandatory,義務的な
+manual,手動の
+maximum,最大の
+mend,直す
+merit,長所
+metaphor,隠喩
+miserable,惨めな
+moderate,穏健な
+modest,控えめな
+modify,修正する
+moisture,湿気
+monitor,監視する
+monopoly,独占
+mortal,死ぬ運命の
+get through,やり遂げる
+hold back,抑える
+in the long term,長期的には
+let down,失望させる
+make up one's mind,決心する
+on the whole,概して
+access,接近
+adventure,冒険
+advantage,利点
+agreement,同意
+ambition,野心
+anniversary,記念日
+appearance,外見
+applause,拍手
+approach,取り組み
+audience,聴衆
+award,賞
+background,背景
+balance,均衡
+basis,基礎
+battle,戦い
+beauty,美
+belief,信念
+boundary,境界
+breakthrough,突破口
+campaign,運動
+capital,首都・資本
+celebrity,有名人
+champion,優勝者
+character,性格
+charge,料金
+childhood,子ども時代
+choice,選択
+collection,収集
+comedy,喜劇
+commitment,約束
+competition,競争
+complaint,不満
+confidence,自信
+connection,つながり
+contribution,貢献
+conversation,会話
+creation,創造
+culture,文化
+danger,危険
+data,データ
+definition,定義
+departure,出発
+description,記述
+development,発達
+difference,違い
+difficulty,困難
+discovery,発見
+discussion,議論
+distinction,区別
+economy,経済
+effect,効果
+effort,努力
+election,選挙
+emergency,緊急事態
+employment,雇用
+enemy,敵
+equipment,設備
+evidence,証拠
+evolution,進化
+exception,例外
+experience,経験
+experiment,実験
+explanation,説明
+expression,表現
+fame,名声
+fashion,流行
+fear,恐れ
+freedom,自由
+friendship,友情
+function,機能
+fund,資金
+generation,世代
+government,政府
+growth,成長
+headline,見出し
+hint,ヒント
+hunger,飢え
+improvement,改善
+industry,産業
+innovation,革新
+instruction,指示
+invention,発明
+investigation,調査
+journey,旅
+judgment,判断
+justice,正義
+knowledge,知識
+labor,労働
+length,長さ
+limit,限界
+majority,大多数
+mankind,人類
+material,材料
+memory,記憶
+method,方法
+mixture,混合物
+mystery,謎
+necessity,必要性
+opinion,意見
+opportunity,機会
+origin,起源
+pain,痛み
+patience,忍耐
+pattern,模様
+period,期間
+personality,個性
+perspective,視点
+poison,毒
+policy,政策
+population,人口
+position,位置
+poverty,貧困
+power,力
+pressure,圧力
+priority,優先事項
+privacy,私生活
+process,過程
+profession,職業
+progress,進歩
+property,財産
+protection,保護
+purpose,目的
+quality,質
+quantity,量
+quarrel,口論
+rate,割合
+reaction,反応
+reality,現実
+recovery,回復
+reference,参照
+relation,関係
+religion,宗教
+research,研究
+resistance,抵抗
+resource,資源
+response,応答
+responsibility,責任
+result,結果
+revolution,革命
+rhythm,リズム
+risk,危険
+role,役割
+routine,日課
+rumor,うわさ
+safety,安全
+salary,給料
+scale,規模
+security,安全
+shortage,不足
+silence,沈黙
+situation,状況
+skill,技能
+society,社会
+solution,解決策
+source,源
+species,種
+speed,速度
+standard,基準
+statistics,統計
+status,地位
+strategy,戦略
+strength,強さ
+structure,構造
+style,様式
+success,成功
+surgery,手術
+symbol,象徴
+sympathy,同情
+talent,才能
+target,目標
+technique,技術
+technology,科学技術
+temperature,温度
+theme,主題
+tradition,伝統
+tragedy,悲劇
+treatment,治療
+truth,真実
+unity,統一
+value,価値
+variety,多様性
+victim,犠牲者
+victory,勝利
+violence,暴力
+wage,賃金
+wealth,富
+welfare,福祉
+wisdom,知恵
+witness,目撃者
+accommodate,収容する
+amid,〜の中で
+approximately,およそ
+ascend,上る
+bulk,大きさ
+clumsy,不器用な
+commute,通勤する
+conceive,思いつく
+courtesy,礼儀
+deadly,致命的な
+decent,きちんとした
+dense,密集した
+disguise,変装
+dispatch,派遣する
+fatigue,疲労
+hospitality,もてなし
+humid,湿った
+mighty,強大な
+plunge,飛び込む
+ripe,熟した
+rural,田舎の
+tidy,きちんとした
+tremendous,途方もない
+vacant,空いた
+#3
+abolish,廃止する
+accumulate,蓄積する
+allocate,割り当てる
+ambiguous,あいまいな
+amend,修正する
+arbitrary,恣意的な
+bureaucracy,官僚制
+coherent,首尾一貫した
+collaborate,協力する
+compel,強いる
+condemn,非難する
+consensus,合意
+consolidate,強化する
+contradict,矛盾する
+credible,信頼できる
+deteriorate,悪化する
+diminish,減少する
+discrete,別個の
+disperse,散らす
+diversity,多様性
+eliminate,取り除く
+embody,具現する
+endeavor,努力
+evoke,呼び起こす
+exaggerate,誇張する
+explicit,明白な
+feasible,実行可能な
+inherent,固有の
+integrate,統合する
+intricate,複雑な
+legitimate,正当な
+mediate,仲裁する
+mitigate,和らげる
+notorious,悪名高い
+obsolete,時代遅れの
+paradox,逆説
+perpetual,永続的な
+persist,固執する
+plausible,もっともらしい
+preliminary,予備の
+prevalent,広く行き渡った
+proportion,割合
+provoke,挑発する
+reconcile,和解させる
+reinforce,強化する
+reluctance,気が進まないこと
+revolve,回転する
+rhetoric,修辞
+scrutiny,精査
+skeptical,懐疑的な
+spontaneous,自発的な
+subsequent,その後の
+subtle,微妙な
+supplement,補足
+suppress,抑える
+surpass,上回る
+susceptible,影響されやすい
+tangible,有形の
+tolerate,許容する
+trivial,些細な
+underlying,根底にある
+validate,立証する
+verify,確かめる
+vigorous,精力的な
+violate,違反する
+withdraw,撤退する
+adhere to,〜に固執する
+bring about,引き起こす
+by virtue of,〜のおかげで
+call into question,疑問視する
+come to terms with,〜を受け入れる
+dispose of,処分する
+give rise to,〜を引き起こす
+in the long run,長い目で見れば
+in the face of,〜に直面して
+on the grounds that,〜という理由で
+play a role in,〜で役割を果たす
+refrain from,〜を控える
+resort to,〜に頼る
+take into account,考慮に入れる
+to the extent that,〜という程度まで
+analogy,類似
+candid,率直な
+commence,始める
+concede,認める
+conducive,助けとなる
+conspicuous,目立つ
+detrimental,有害な
+discern,見分ける
+dubious,疑わしい
+eloquent,雄弁な
+empirical,経験的な
+exemplify,例証する
+flourish,繁栄する
+formidable,手ごわい
+futile,無駄な
+grim,厳しい
+impede,妨げる
+indigenous,先住の
+indispensable,不可欠な
+infringe,侵害する
+intrinsic,本質的な
+invoke,持ち出す
+momentum,勢い
+nuance,微妙な差
+omit,省略する
+pragmatic,実際的な
+precarious,不安定な
+profound,深遠な
+prolific,多産な
+prudent,慎重な
+redundant,余分な
+resilient,回復力のある
+sovereign,主権の
+stagnant,停滞した
+superficial,表面的な
+thrive,繁栄する
+unprecedented,前例のない
+volatile,不安定な
+whereas,〜であるのに
+lay emphasis on,〜を強調する
+the former,前者
+the latter,後者
+to say nothing of,〜は言うまでもなく
+with a view to,〜する目的で
+cognitive,認知の
+compelling,説得力のある
+comply,従う
+concise,簡潔な
+contemplate,熟考する
+controversial,議論を呼ぶ
+deem,みなす
+depict,描写する
+eradicate,根絶する
+implication,含意
+impartial,公平な
+integral,不可欠な
+interim,暫定の
+jeopardize,危険にさらす
+lenient,寛大な
+mandate,命令
+pledge,誓約
+bear in mind,心に留める
+by and large,概して
+come to light,明らかになる
+in the wake of,〜の後に続いて
+on account of,〜のために
+under the circumstances,そういう状況では
+absurd,ばかげた
+accidental,偶然の
+ambitious,野心的な
+apparently,見たところ
+boundless,限りない
+brilliant,見事な
+characteristic,特有の
+chiefly,主として
+civilized,文明化した
+commonly,一般に
+competent,有能な
+considerably,かなり
+consistent,一貫した
+critical,批判的な
+decisive,決定的な
+definite,明確な
+dependent,頼っている
+desirable,望ましい
+distinct,明瞭な
+dull,鈍い
+eager,熱心な
+elderly,年配の
+eventually,結局は
+exact,正確な
+excessive,過度の
+extensive,広範囲の
+fundamentally,根本的に
+generally,一般に
+gradual,徐々の
+hardly ever,めったに〜ない
+harmful,有害な
+immediately,すぐに
+increasingly,ますます
+influential,影響力のある
+innovative,革新的な
+instant,即時の
+moreover,さらに
+mostly,たいてい
+namely,すなわち
+nearly,ほとんど
+necessarily,必ず
+nevertheless,それでも
+obviously,明らかに
+occasionally,ときどき
+overseas,海外の
+partly,部分的に
+precisely,正確に
+presumably,おそらく
+previously,以前に
+primarily,主に
+properly,適切に
+rarely,めったに〜ない
+relatively,比較的
+reluctantly,しぶしぶ
+roughly,およそ
+scarcely,ほとんど〜ない
+seldom,めったに〜ない
+severely,厳しく
+significantly,著しく
+simultaneously,同時に
+slightly,わずかに
+specifically,特に
+strictly,厳密に
+sufficiently,十分に
+supposedly,たぶん
+temporary,一時的な
+thoroughly,徹底的に
+typically,典型的に
+undoubtedly,疑いなく
+unfortunately,残念ながら
+virtually,事実上
+voluntary,自発的な
+at all costs,何としても
+at the cost of,〜を犠牲にして
+by accident,偶然に
+by chance,偶然に
+for good,永久に
+for the time being,当面は
+from now on,今後は
+in advance,前もって
+in case of,〜の場合は
+in contrast to,〜と対照的に
+in general,一般に
+in other words,言い換えれば
+in particular,特に
+in public,人前で
+in return for,〜の見返りに
+in short,要するに
+in the end,結局
+in vain,むなしく
+on purpose,わざと
+on the contrary,それどころか
+to some extent,ある程度
+under way,進行中で
+without fail,必ず
+as a result,その結果
+as a matter of fact,実を言えば
+at the same time,同時に
+after all,結局
+be fond of,〜が好きだ
+be ashamed of,〜を恥じる
+be familiar with,〜をよく知っている
+be satisfied with,〜に満足している
+be tired of,〜に飽きている
+be worth ~ing,〜する価値がある
+cannot help ~ing,〜せざるをえない
+have nothing to do with,〜と関係がない
+look down on,見下す
+make fun of,からかう
+object to,〜に反対する
+participate in,〜に参加する
+prevent ~ from,〜が〜するのを妨げる
+provide ~ with,〜に〜を提供する
+refer to,言及する
+rely on,〜に頼る
+succeed in,〜に成功する
+suffer from,〜に苦しむ
+turn down,断る
+accountable,説明責任がある
+accelerate,加速する
+adjacent,隣接した
+aesthetic,美的な
+agenda,議題
+alliance,同盟
+ambiguity,あいまいさ
+applicable,適用できる
+assertion,主張
+asset,資産
+attain,達成する
+bankruptcy,破産
+bilateral,二国間の
+biodiversity,生物多様性
+capitalism,資本主義
+clash,衝突
+coalition,連合
+commemorate,記念する
+compatible,両立する
+compensation,補償
+competence,能力
+conception,概念
+confine,制限する
+conservation,保護
+conservative,保守的な
+contaminate,汚染する
+contradiction,矛盾
+contrary,反対の
+conventional,従来の
+credibility,信頼性
+criterion,基準
+cultivation,栽培
+decay,腐る
+deficiency,不足
+deforestation,森林伐採
+delegate,代表者
+democratic,民主的な
+demographic,人口統計の
+dependence,依存
+depression,不況
+devastate,荒廃させる
+diagnose,診断する
+discrimination,差別
+disposal,処分
+distort,ゆがめる
+disturb,妨げる
+drastic,抜本的な
+durable,耐久性のある
+ecosystem,生態系
+efficiency,効率
+elaborate,詳しく述べる
+emigrate,移住する
+empower,力を与える
+endangered,絶滅の危機にある
+enterprise,企業
+equate,同一視する
+ethics,倫理
+exclusive,独占的な
+exemption,免除
+expenditure,支出
+exposure,さらされること
+fertile,肥沃な
+gene,遺伝子
+hierarchy,階層
+humanitarian,人道的な
+hypothetical,仮定の
+illustrate,説明する
+immune,免疫の
+inclination,傾向
+incompatible,両立しない
+indifference,無関心
+inequality,不平等
+infrastructure,社会基盤
+inhabitant,住民
+initiative,主導権
+innate,生まれつきの
+insufficient,不十分な
+intact,無傷の
+irrelevant,無関係な
+legislation,立法
+literate,読み書きできる
+marginal,わずかな
+maternal,母の
+migration,移住
+minimize,最小化する
+monetary,金銭の
+mutation,突然変異
+nourish,養う
+occupation,職業
+offspring,子孫
+oppress,抑圧する
+optimistic,楽観的な
+outbreak,発生
+overwhelming,圧倒的な
+paradigm,理論的枠組み
+pessimistic,悲観的な
+pharmaceutical,薬の
+postpone,延期する
+precedent,前例
+predominant,支配的な
+pretend,ふりをする
+proclaim,宣言する
+prosper,繁栄する
+provision,供給
+proximity,近さ
+quota,割当て
+recession,景気後退
+recruit,採用する
+regulate,規制する
+renewable,再生可能な
+replicate,複製する
+resign,辞職する
+retrieve,取り戻す
+revenue,収入
+ritual,儀式
+scrutinize,詳しく調べる
+segregate,分離する
+sibling,きょうだい
+simulate,模擬実験する
+solitary,孤独な
+stereotype,固定観念
+subordinate,下位の
+subsidy,補助金
+sustainable,持続可能な
+synthetic,合成の
+taboo,タブー
+terminate,終わらせる
+territory,領土
+toxic,有毒な
+trait,特性
+transmit,伝える
+transparent,透明な
+tribe,部族
+unanimous,全員一致の
+unify,統一する
+unveil,明らかにする
+vaccine,ワクチン
+vegetation,植物
+versatile,多才な
+vessel,船・容器
+warrant,正当化する
+owing to,〜のために
+in line with,〜に沿って
+in light of,〜を考慮して
+with respect to,〜に関して
+on the basis of,〜に基づいて
+in favor of,〜に賛成して
+at the expense of,〜を犠牲にして
+get hold of,〜を手に入れる
+keep pace with,〜と歩調を合わせる
+lose sight of,〜を見失う
+make allowance for,〜を考慮する
+pay off,報われる
+pick out,選び出す
+pull off,やり遂げる
+settle down,落ち着く
+shed light on,〜を解明する
+stand out,目立つ
+stick to,〜に固執する
+take after,〜に似る
+wear out,すり減らす
+wipe out,一掃する
+`;
+let curG=1;const W=[];RAW.trim().split('\n').forEach(l=>{if(l[0]==='#'){curG=+l[1];return}const p=l.split(',');W.push({id:W.length,e:p[0],j:p[1],g:curG,c:p[0].includes(' ')?'phr':'word'})});
+const lvl=w=>{const n=w.e.replace(/ /g,'').length;return Math.max(1,Math.min(3,w.g+(n>=9?1:n<=4?-1:0)))};
+W.forEach(w=>w.d=lvl(w));
+const ld=k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify([...v]))}catch(e){}};
+let fav=new Set(ld('fav')),wrong=new Set(ld('wrong'));
+let tab='test',pool='all',filt='all',mode='choice',qn='10',cat='all',grade='all',dif='all',sview='ok',T=null;
+let stats=(()=>{try{return JSON.parse(localStorage.getItem('stats'))||{}}catch(e){return{}}})();
+const saveStats=()=>{try{localStorage.setItem('stats',JSON.stringify(stats))}catch(e){}};
+const $=s=>document.querySelector(s);
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const byId=id=>W[id];
+const CATS=[['all','すべて'],['word','単語'],['phr','熟語・イディオム'],];
+const GR=[['all','全学年'],['1','高1'],['2','高2'],['3','高3']];
+const gN=k=>k==='all'?W.length:W.filter(w=>String(w.g)===k).length;
+const gradeRow=f=>`<div class="pool">${GR.map(([k,l])=>`<button class="${grade===k?'on':''}" onclick="grade='${k}';${f}"><b>${gN(k)}</b>${l}</button>`).join('')}</div>`;
+const DR=[['all','すべて'],['1','やさしい'],['2','ふつう'],['3','むずかしい']];
+const dN=k=>k==='all'?W.length:W.filter(w=>String(w.d)===k).length;
+const diffRow=f=>`<div class="pool">${DR.map(([k,l])=>`<button class="${dif===k?'on':''}" onclick="dif='${k}';${f}"><b>${dN(k)}</b>${l}</button>`).join('')}</div>`;
+const matrix=f=>`<div class="mx"><span></span>${[['1','やさしい'],['2','ふつう'],['3','むずかしい']].map(x=>`<span class="h">${x[1]}</span>`).join('')}${['1','2','3'].map(g=>`<span class="h">高${g}</span>`+['1','2','3'].map(d=>`<button class="${grade===g&&dif===d?'on':''}" onclick="grade='${g}';dif='${d}';${f}"><b>${W.filter(w=>String(w.g)===g&&String(w.d)===d).length}</b>語</button>`).join('')).join('')}</div>`;
+const catN=k=>k==='all'?W.length:W.filter(w=>w.c===k).length;
+const catRow=f=>`<div class="pool">${CATS.map(([k,l])=>`<button class="${cat===k?'on':''}" onclick="cat='${k}';${f}"><b>${catN(k)}</b>${l}</button>`).join('')}</div>`;
+const poolIds=p=>(p==='fav'?[...fav]:p==='wrong'?[...wrong]:W.map(w=>w.id)).filter(id=>(cat==='all'||byId(id).c===cat)&&(grade==='all'||String(byId(id).g)===grade)&&(dif==='all'||String(byId(id).d)===dif));
+const esc=s=>s.replace(/</g,'&lt;');
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function toggleFav(id){fav.has(id)?fav.delete(id):fav.add(id);sv('fav',fav)}
+function nav(){
+  const t=[['test','テスト'],['list','単語帳'],['review','復習'],['stats','記録']];
+  $('#nav').innerHTML=t.map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('${k}')">${n}${k==='review'?` (${wrong.size})`:''}</button>`).join('');
+}
+function go(k){tab=k;T=null;if(k==='review')pool='wrong';render()}
+function render(){nav();({test:rTest,list:rList,review:rReview,stats:rStats})[tab]()}
+function rTest(){
+  if(T&&T.i<T.q.length)return rQ();
+  if(T)return rResult();
+  rHome('単語テスト','10問のクイズです。意味を4つから選びましょう。');
+}
+function rReview(){
+  if(T&&T.i<T.q.length)return rQ();
+  if(T)return rResult();
+  rHome('間違えた単語を復習','正解するとリストから消えます。全部消すのが目標!');
+}
+function rHome(title,desc){
+  const n=p=>poolIds(p).length;
+  const opts=tab==='review'?[['wrong','間違えた単語']]:[['all','全単語'],['fav','お気に入り'],['wrong','間違えた単語']];
+  if(!opts.some(o=>o[0]===pool))pool=opts[0][0];
+  $('#app').innerHTML=`<h1>${title}</h1><p class="muted">${desc}</p>
+  <p class="muted" style="margin:0 0 6px">学年×難易度(タップで選択)</p>${matrix('render()')}<p class="muted" style="margin:0 0 6px">学年</p>${gradeRow('render()')}<p class="muted" style="margin:0 0 6px">難易度</p>${diffRow('render()')}<p class="muted" style="margin:0 0 6px">出題する種類</p>${catRow('render()')}<p class="muted" style="margin:0 0 6px">出題形式</p><div class="pool">${[['choice','英→日(4択)'],['rev','日→英(4択)'],['spell','日→英(つづり)']].map(([k,l])=>`<button class="${mode===k?'on':''}" onclick="mode='${k}';render()">${l}</button>`).join('')}</div>
+  <div class="pool">${opts.map(([k,l])=>`<button class="${pool===k?'on':''}" onclick="pool='${k}';render()"><b>${n(k)}</b>${l}</button>`).join('')}</div>
+  <p class="muted" style="margin:0 0 6px">出題数(「全部」で選んだ範囲をまとめて出題)</p><div class="pool">${[['10','10問'],['30','30問'],['50','50問'],['all','全部']].map(([k,l])=>`<button class="${qn===k?'on':''}" onclick="qn='${k}';render()"><b>${k==='all'?n(pool):Math.min(+k,n(pool))}</b>${l}</button>`).join('')}</div>
+  <button class="btn" ${n(pool)<1?'disabled':''} onclick="start()">${n(pool)<1?'対象の単語がありません':'スタート'}</button>`;
+}
+function start(){
+  const ids=shuf(poolIds(pool)).slice(0,qn==='all'?undefined:+qn);
+  T={q:ids,i:0,ok:[],ng:[],ans:null};render();
+}
+function rQ(){
+  const w=byId(T.q[T.i]),a=T.ans,sp=mode==='spell',rv=mode==='rev';
+  if(!sp&&!T.opts){const key=x=>rv?x.e:x.j,sk=new Set([key(w)]),d=[];for(const x of shuf(W.filter(x=>x.id!==w.id&&x.c===w.c))){if(!sk.has(key(x))){sk.add(key(x));d.push(x);if(d.length===3)break}}T.opts=shuf([w,...d])}
+  const qt=(sp||rv)?w.j:w.e;
+  let body;
+  if(sp){
+    const col=a?(a.c?'var(--ok)':'var(--ng)'):'var(--bd)';
+    body=`<input id="sp" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${w.e.length}文字" value="${esc(a?a.v:(T.draft||''))}" ${a?'disabled':''} oninput="T.draft=this.value" onkeydown="if(event.key==='Enter')submitSp()" style="width:100%;padding:13px;font-size:1.2rem;border:2px solid ${col};border-radius:12px;background:var(--card);color:var(--tx);text-align:center">`+(a?`<p style="text-align:center;font-size:1.2rem">正解: <b>${esc(w.e)}</b></p>`:`<button class="btn" style="margin-top:10px" onclick="submitSp()">答える</button>`);
+  }else{
+    body=T.opts.map(o=>{const t=rv?o.e:o.j;return `<button class="ch ${a?(o.id===w.id?'ok':(o.id===a.id?'ng':'')):''}" ${a?'disabled':''} onclick="pick(${o.id})">${esc(t)}</button>`}).join('');
+  }
+  $('#app').innerHTML=`<div class="top"><span>${T.i+1} / ${T.q.length}</span><span>◎ ${T.ok.length}　× ${T.ng.length}</span><button class="spk" onclick="endNow()">終了</button></div>
+  <div class="bar"><i style="width:${T.i/T.q.length*100}%"></i></div>
+  <div class="card"><div style="text-align:right"><button class="star ${fav.has(w.id)?'on':''}" onclick="toggleFav(${w.id});rQ()">★</button></div>
+  <div class="word" style="${qt===w.j?'font-size:1.7rem':''}">${esc(qt)}</div>
+  ${(!sp&&!rv)||a?`<div style="text-align:center;margin-bottom:6px"><button class="spk" onclick="speak('${w.e}')">🔊 発音</button></div>`:''}
+  <div class="mark ${a?(a.c?'ok':'ng'):''}">${a?(a.c?'◎':'×'):''}</div>
+  ${body}</div>
+  ${a?`<button class="btn" onclick="nextQ()">${T.i+1<T.q.length?'次へ':'結果を見る'}</button>`:''}`;
+  if(sp&&!a)setTimeout(()=>{const e=$('#sp');e&&e.focus()},50);
+}
+function fin(c,ans){
+  const w=byId(T.q[T.i]);T.ans=ans;
+  if(c){T.ok.push(w.id);wrong.delete(w.id)}else{T.ng.push(w.id);wrong.add(w.id)}
+  stats[w.id]=stats[w.id]||[0,0];stats[w.id][c?0:1]++;saveStats();sv('wrong',wrong);nav();rQ();
+}
+function pick(id){fin(id===byId(T.q[T.i]).id,{id,c:id===byId(T.q[T.i]).id})}
+function submitSp(){
+  const v=($('#sp').value||'').trim();if(!v||T.ans)return;
+  const w0=byId(T.q[T.i]);const c=W.some(x=>x.j===w0.j&&x.e.toLowerCase()===v.toLowerCase());
+  fin(c,{c,v});
+}
+function endNow(){const k=T.i+(T.ans?1:0);T.q=T.q.slice(0,k);T.i=k;T.ans=null;T.opts=null;if(!k)T=null;render()}
+function nextQ(){T.i++;T.ans=null;T.opts=null;T.draft='';render()}
+function rResult(){
+  const n=T.q.length,s=T.ok.length;
+  $('#app').innerHTML=`<h1>結果</h1><div class="card"><div class="big">${s} / ${n}</div>
+  <p class="muted" style="text-align:center">${s===n?'全問正解!すばらしい!':s>=n*0.7?'よくできました!':'間違えた単語をもう一度やってみよう'}</p></div>
+  ${T.ng.length?`<div class="card"><b>間違えた単語</b>${T.ng.map(id=>{const w=byId(id);return `<div class="row"><span class="e">× ${esc(w.e)}</span><span class="j">${esc(w.j)}</span></div>`}).join('')}</div>
+  <button class="btn" onclick="retry()">間違えた単語だけ再テスト</button><div style="height:8px"></div>`:''}
+  <button class="btn sub" onclick="T=null;render()">もどる</button>`;
+}
+function retry(){T={q:shuf(T.ng),i:0,ok:[],ng:[],ans:null};render()}
+function rStats(){
+  const k=sview==='ok'?0:1;
+  const all=Object.keys(stats).map(Number).filter(id=>byId(id)&&(cat==='all'||byId(id).c===cat)&&(grade==='all'||String(byId(id).g)===grade)&&(dif==='all'||String(byId(id).d)===dif));
+  const r=all.filter(id=>stats[id][k]>0).sort((a,b)=>stats[b][k]-stats[a][k]||a-b);
+  const nOk=all.filter(id=>stats[id][0]>0).length,nNg=all.filter(id=>stats[id][1]>0).length;
+  const tot=all.reduce((t,id)=>[t[0]+stats[id][0],t[1]+stats[id][1]],[0,0]);
+  $('#app').innerHTML=`<h1>学習の記録</h1>${matrix('rStats()')}${gradeRow('rStats()')}${diffRow('rStats()')}${catRow('rStats()')}
+  <div class="pool"><button class="${k===0?'on':''}" onclick="sview='ok';rStats()"><b>${nOk}</b>◎ 正解した単語</button><button class="${k===1?'on':''}" onclick="sview='ng';rStats()"><b>${nNg}</b>× 不正解の単語</button></div>
+  <p class="muted">これまでの合計: ◎ ${tot[0]}回 / × ${tot[1]}回(回数の多い順)</p>
+  <div class="card">${r.length?r.map(id=>{const w=byId(id),st=stats[id];return `<div class="row"><span class="e" style="color:var(${k?'--ng':'--ok'})">${k?'×':'◎'} ${esc(w.e)}</span><span class="j">${esc(w.j)}</span><span style="text-align:right;font-size:.85rem"><b style="font-size:1.1rem">${st[k]}回</b><br><span class="muted">◎${st[0]} ×${st[1]}</span></span></div>`}).join(''):'<p class="muted">まだ記録がありません。テストをすると回数が記録されます。</p>'}</div>`;
+}
+function rList(){
+  $('#app').innerHTML=`<h1>単語帳</h1><input type="search" id="q" placeholder="英語・日本語で検索" oninput="drawList()">
+  ${matrix('rList()')}${gradeRow('rList()')}${diffRow('rList()')}${catRow('rList()')}<div class="pool">${[['all','全部'],['fav','★お気に入り'],['wrong','× 苦手']].map(([k,l])=>`<button class="${filt===k?'on':''}" onclick="filt='${k}';rList()">${l}</button>`).join('')}</div>
+  <div class="card" id="list"></div>`;
+  drawList();
+}
+function drawList(){
+  const q=($('#q').value||'').toLowerCase();
+  const ids=new Set(poolIds(filt));
+  const r=W.filter(w=>ids.has(w.id)&&(w.e.includes(q)||w.j.includes(q))).sort((a,b)=>a.d-b.d);
+  $('#list').innerHTML=r.length?r.map(w=>`<div class="row"><button class="star ${fav.has(w.id)?'on':''}" onclick="toggleFav(${w.id});drawList()">★</button><span class="e">${esc(w.e)}</span><span class="j">${esc(w.j)}</span><span class="muted" style="font-size:.7rem;color:var(--star)">${'★'.repeat(w.d)}</span><button class="spk" onclick="speak('${w.e}')">🔊</button></div>`).join(''):'<p class="muted">該当する単語がありません</p>';
+}
+render();
+</script></body></html>
